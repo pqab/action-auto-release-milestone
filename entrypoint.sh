@@ -18,6 +18,16 @@ fi
 # Get milestone name
 milestone_name=$(jq --raw-output .milestone.title $GITHUB_EVENT_PATH)
 
-echo "::set-output name=release-url::http://example.com"
+# Split owner/repository from $GITHUB_REPOSITORY
+IFS='/' read owner repository <<< "$GITHUB_REPOSITORY"
+
+release_url=$(dotnet gitreleasemanager create \
+--milestone $milestone_name \
+--targetcommitish $GITHUB_SHA \
+--token $repo_token \
+--owner $owner \
+--repository $repository)
+
+echo "::set-output name=release-url::$release_url"
 
 exit 0

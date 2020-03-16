@@ -8,6 +8,9 @@ LABEL repository="https://github.com/pqab/action-auto-release-milestone.git"
 LABEL maintainer="pqab"
 
 RUN apt-get update && apt-get install -y jq
+RUN dotnet tool install -g GitReleaseManager.Tool
+
+ENV PATH /root/.dotnet/tools:$PATH
 
 COPY entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
