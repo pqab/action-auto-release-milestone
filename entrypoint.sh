@@ -5,16 +5,16 @@ repo_token=$1
 
 # Check name is 'milestone'
 if [ "$GITHUB_EVENT_NAME" != "milestone" ]; then
-    echo "::debug::The event name was '$GITHUB_EVENT_NAME'"
-    exit 0
+  echo "::debug::The event name was '$GITHUB_EVENT_NAME'"
+  exit 0
 fi
 
 event_type=$(jq --raw-output .action $GITHUB_EVENT_PATH)
 
 # Check milestone was closed
-if [ $event_type != 'closed' ]; then
-    echo "::debug::The event type was '$event_type'"
-    exit 0
+if [ $event_type != "closed" ]; then
+  echo "::debug::The event type was '$event_type'"
+  exit 0
 fi
 
 # Get milestone name
